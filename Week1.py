@@ -1,5 +1,7 @@
 __author__ = 'Hugh'
 import numpy as np
+import collections
+from collections import defaultdict
 
 def iteration(M, beta, r, constraint):
     r_prime = np.dot(r, np.transpose(np.dot(M, beta)))
@@ -28,6 +30,36 @@ def calculatePageRank(M, beta, constraint):
 
     return r
 
+def primes(n):
+    primfac = []
+    d = 2
+    while d*d <= n:
+        while (n % d) == 0:
+            primfac.append(d)  # supposing you want multiple factors repeated
+            n /= d
+        d += 1
+    if n > 1:
+       primfac.append(n)
+    return list(set(primfac))
+
+def createPrimeList(values):
+    primes_count = defaultdict(int)
+    for x in values:
+        prime_list = primes(x)
+        for prime in prime_list:
+            primes_count[prime] += x
+
+    return primes_count
+
+def convertIntoPrimeDivisorsAndCount(values):
+
+    primes_count = createPrimeList(values)
+    primes_count = collections.OrderedDict(sorted(primes_count.items()))
+    return primes_count
+
+
+
+
 print("Question 1")
 M = np.array([[0.0, 1.0, 1.0], [0.0, 0.0, 1.0], [0.0, 0.0, 1.0]])
 M = np.transpose(M)
@@ -44,4 +76,9 @@ print("Question 3")
 M = np.array([[0.0, 1.0, 1.0], [0.0, 0.0, 1.0], [1.0, 0.0, 0.0]])
 M = np.transpose(M)
 r = calculatePageRank(M, 1.0, 3.0)
+print("done")
+
+print("Question 4")
+values = [15, 21, 24, 30, 49]
+primes_count = convertIntoPrimeDivisorsAndCount(values)
 print("done")
