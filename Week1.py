@@ -42,23 +42,14 @@ def primes(n):
        primfac.append(n)
     return list(set(primfac))
 
-def createPrimeList(values):
+def convertIntoPrimeDivisorsAndCount(values):
     primes_count = defaultdict(int)
     for x in values:
         prime_list = primes(x)
         for prime in prime_list:
             primes_count[prime] += x
 
-    return primes_count
-
-def convertIntoPrimeDivisorsAndCount(values):
-
-    primes_count = createPrimeList(values)
-    primes_count = collections.OrderedDict(sorted(primes_count.items()))
-    return primes_count
-
-
-
+    return collections.OrderedDict(sorted(primes_count.items()))
 
 print("Question 1")
 M = np.array([[0.0, 1.0, 1.0], [0.0, 0.0, 1.0], [0.0, 0.0, 1.0]])
